@@ -35,11 +35,22 @@ let server  = http.createServer((req,res) =>{
 
                 fs.writeFile("userData.txt",value,(err) =>{
                     res.statusCode =302;
-                    res.setHeader('Location','/')
+                    res.setHeader('Location','/read')
                     res.end();
                 })
+               
             })
-           
+        }
+        else{
+            if(url ==='/read'){
+                //read from the file
+                fs.readFile('userData.txt',(error,data) =>{
+                    console.log(data.toString());
+                    res.end(`
+                    <h1>${data.toString()}</h1>
+                    `);
+                })
+            }
         }
        
     }
